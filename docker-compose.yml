@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  db:
+    build: ./db
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: emails_db
+    ports:
+      - "3306:3306"
+  web:
+    build: ./web
+    environment:
+      MYSQL_DATABASE: emails_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: pass
+      MYSQL_HOST: db
+    ports:
+      - "9898:9898"
+    depends_on:
+      - db
+    restart: on-failure
